@@ -1,6 +1,10 @@
 set nocompatible               " be iMproved
 
-filetype off                   " required!
+" filetype off                   " required!
+" File Type detection
+filetype on
+filetype plugin on
+
 
 "<Leader> key is ,
 let mapleader=","
@@ -48,12 +52,13 @@ Bundle 'joonty/vdebug.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
 Bundle 'tpope/vim-fugitive.git'
-Bundle 'tpope/vim-rails.git'
+Bundle 'sebastiankessler/phpcomplete.vim.git'
+"Bundle 'tpope/vim-rails.git'
 Bundle 'greyblake/vim-preview.git'
 Bundle 'sjl/gundo.vim.git'
 Bundle 'fholgado/minibufexpl.vim.git'
 Bundle 'ervandew/supertab.git'
-Bundle 'vim-ruby/vim-ruby.git'
+"Bundle 'vim-ruby/vim-ruby.git'
 Bundle 'msanders/snipmate.vim.git'
 Bundle 'scrooloose/syntastic.git'
 " vim-scripts repos
@@ -64,7 +69,8 @@ Bundle 'FuzzyFinder'
 
 filetype plugin indent on     " required! 
 syntax enable
-colorscheme jc
+" colorscheme jc
+colorscheme molokai
 runtime macros/matchit.vim
 let g:EasyMotion_leader_key = '<Space>'
 
@@ -175,25 +181,6 @@ function! s:RunShellCommand(cmdline)
     call append(line('$'), substitute(getline(2), '.', '=', 'g'))
     silent execute '$read !'. expanded_cmdline
     1
-endfunction
-"}}}
-"{{{ CakePHP unit test callback for PHPUnitQf
-function! CakePHPTestCallback(args)
-    " Trim white space
-    let l:args = substitute(a:args, '^\s*\(.\{-}\)\s*$', '\1', '')
-
-    " If no arguments are passed to :Test
-    if len(l:args) is 0
-        let l:file = expand('%')
-        if l:file =~ "^.*app/Test/Case.*"
-            " If the current file is a unit test
-            let l:args = substitute(l:file,'^.*app/Test/Case/\(.\{-}\)Test\.php$','\1','')
-        else
-            " Otherwise try and run the test for this file
-            let l:args = substitute(l:file,'^.*app/\(.\{-}\)\.php$','\1','')
-        endif
-    endif
-    return l:args
 endfunction
 "}}}
 " {{{ Sass compile
@@ -381,10 +368,13 @@ command! -nargs=* -complete=function Call exec 'call '.<f-args>
 set statusline=%{exists(\"*fugitive#statusline\")?\"branch:\ \".fugitive#statusline():\"\"}\ %F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
 
 let g:NERDTreeMapHelp = "h"
+" NERD Tree
+nmap <silent> <C-e> :NERDTreeToggle<RETURN>
 
 " Set font for GUI (e.g. GVim)
 if has("gui_running")
-    set guifont=Anonymous\ Pro\ 13
+    set guifont=DejaVu\ Sans\ Mono\ 13
+    autocmd VimEnter * NERDTree     "run nerdtree
 endif
 
 "{{{ Mini Buffer settings
@@ -394,7 +384,7 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1 
 "}}}
 
-"{{{ Key Maps
+ "{{{ Key Maps
 
 "Escape insert with 'jj', as you probably won't type that
 inoremap jj <Esc>
@@ -405,8 +395,8 @@ nnoremap JJJJ <Nop>
 map <Leader>b :call Browser ()<CR>
 
 " Instead of 1 line, move 3 at a time
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
+"nnoremap <C-e> 3<C-e>
+"nnoremap <C-y> 3<C-y>
 
 " My handy window reset function
 nnoremap <C-a> :call SetWindows()<CR>
@@ -420,6 +410,14 @@ vnoremap <C-d> :call PhpDocRange()<CR>
 " Ultra-amazing history viewer
 nnoremap <C-G> :GundoToggle<CR>
 "}}}
+" Show lines that exceed 80 characters
+match ErrorMsg '\%80v.\+'
+" Turn on Line numbers
+set number
+
+" PHPUnit
+let g:phpunit_cmd = "/usr/bin/phpunit" 
+" let g:phpunit_args = "--configuration /path/to/config" 
 
 " Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
