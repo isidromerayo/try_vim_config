@@ -65,6 +65,7 @@ Bundle 'scrooloose/syntastic.git'
 Bundle 'taglist.vim'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'AutoClose'
 "}}}
 
 filetype plugin indent on     " required! 
