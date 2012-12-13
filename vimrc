@@ -24,6 +24,12 @@ if g:os == "win"
 	let $TEMP=expand("$HOME/vim-tmp")
 endif
 
+" GNOME Terminal supports 256 colors, but doesn't advertise its support. You can override vim's autodetection by putting
+" http://askubuntu.com/questions/67/how-do-i-enable-full-color-support-in-terminal
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+
 " Vundle init
 set rtp+=~/.vim/bundle/vundle/
 
@@ -77,6 +83,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'taglist.vim'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'AutoClose'
 "}}}
 
 filetype plugin indent on     " required! 
