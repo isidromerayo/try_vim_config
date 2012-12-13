@@ -51,7 +51,7 @@ Bundle 'joonty/vim-sauce.git'
 Bundle 'joonty/vdebug.git'
 Bundle 'joonty/vim-phpunitqf.git'
 Bundle 'joonty/vim-taggatron.git'
-Bundle 'tpope/vim-fugitive.git'
+"Bundle 'tpope/vim-fugitive.git'
 Bundle 'sebastiankessler/phpcomplete.vim.git'
 "Bundle 'tpope/vim-rails.git'
 Bundle 'greyblake/vim-preview.git'
@@ -61,6 +61,18 @@ Bundle 'ervandew/supertab.git'
 "Bundle 'vim-ruby/vim-ruby.git'
 Bundle 'msanders/snipmate.vim.git'
 Bundle 'scrooloose/syntastic.git'
+" Javascript
+Bundle 'leshill/vim-json'
+Bundle 'groenewege/vim-less'
+Bundle 'pangloss/vim-javascript'
+Bundle 'taxilian/vim-web-indent'
+Bundle 'itspriddle/vim-jquery'
+" HTML
+Bundle 'amirh/HTML-AutoCloseTag'
+Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
+" Twig
+Bundle 'beyondwords/vim-twig'
+Bundle 'altercation/vim-colors-solarized'
 " vim-scripts repos
 Bundle 'taglist.vim'
 Bundle 'L9'
@@ -71,6 +83,7 @@ filetype plugin indent on     " required!
 syntax enable
 " colorscheme jc
 colorscheme molokai
+" colorscheme satori
 runtime macros/matchit.vim
 let g:EasyMotion_leader_key = '<Space>'
 
@@ -415,15 +428,31 @@ match ErrorMsg '\%80v.\+'
 " Turn on Line numbers
 set number
 
+
+
+" Remove trailing whitespaces and ^M chars
+autocmd FileType c,cpp,java,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" jQuery
+au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+
 " PHPUnit
-let g:phpunit_cmd = "/usr/bin/phpunit" 
+" let g:phpunit_cmd = "/usr/bin/phpunit" 
 " let g:phpunit_args = "--configuration /path/to/config" 
 
 " Tab completion - local
 let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
 " Vdebug options
-let g:vdebug_options = {"on_close":"detach"}
+" let g:vdebug_options = {"on_close":"detach"}
 
 " Vim snippets location
 let g:snippets_dir = "~/.vim/snippets/"
