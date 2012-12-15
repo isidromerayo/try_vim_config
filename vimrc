@@ -26,9 +26,7 @@ endif
 
 " GNOME Terminal supports 256 colors, but doesn't advertise its support. You can override vim's autodetection by putting
 " http://askubuntu.com/questions/67/how-do-i-enable-full-color-support-in-terminal
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
+set t_Co=256
 
 " Vundle init
 set rtp+=~/.vim/bundle/vundle/
@@ -79,6 +77,18 @@ Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 " Twig
 Bundle 'beyondwords/vim-twig'
 Bundle 'altercation/vim-colors-solarized'
+"
+" PHP namespace
+"
+Bundle 'arnaud-lb/vim-php-namespace'
+"
+" Behat
+"
+Bundle 'veloce/vim-behat'
+"
+" Refactoring
+"
+Bundle 'taq/vim-refact'
 " vim-scripts repos
 Bundle 'taglist.vim'
 Bundle 'L9'
